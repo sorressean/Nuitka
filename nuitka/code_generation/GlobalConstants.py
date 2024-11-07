@@ -109,6 +109,9 @@ def getConstantDefaultPopulation():
         "close",
     ]
 
+    if python_version < 0x300:
+        result += ("lstat",)
+
     # Pickling of instance methods.
     if python_version < 0x300:
         result += ("__newobj__",)
