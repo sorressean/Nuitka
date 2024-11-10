@@ -177,6 +177,11 @@ disable_ccache = getArgumentBool("disable_ccache", False)
 
 # Preprocessor defines and link libraries from plugins
 cpp_defines = getArgumentList("cpp_defines", "")
+#macros for windows.
+cpp_defines.append("VC_EXTRALEAN")
+cpp_defines.append("WIN32_LEAN_AND_MEAN")
+cpp_defines.append("NDEBUG")
+
 cpp_include_dirs = getArgumentList("cpp_include_dirs", "")
 link_dirs = getArgumentList("link_dirs", "")
 link_libraries = getArgumentList("link_libraries", "")
@@ -339,6 +344,7 @@ if env.gcc_mode and not env.clang_mode and env.gcc_version >= (8,):
         # TODO: This also lies for modules codes.
         env.Append(
             CCFLAGS=[
+                ""/O2 /GL /LTCG /machine:x64 /GF /INCREMENTAL:NO /Ob2 /Gy /fp:fast /Zc:inline /GS- /Oi /EHsc /OPT:REF /OPT:ICF",
                 "--file-prefix-map=%s=%s" % (os.path.normpath(source_dir), "."),
                 "--file-prefix-map=%s=%s"
                 % (
